@@ -1,0 +1,16 @@
+# Context for triage. Keyed by SecurOTy agent name and by IP address.
+agents:
+  fw-cell-01:
+    zone: cell-1
+    criticality: high
+    owner: OT maintenance, Line 1
+    description: ads-tec firewall running the SecurOTy agent
+hosts:
+  192.168.10.1:
+    zone: cell-1
+    criticality: high
+    owner: OT maintenance, Line 1
+  10.20.0.15:
+    zone: office
+    criticality: low
+    owner: Engineering workstation (J. Doe)

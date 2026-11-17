@@ -1,0 +1,40 @@
+title: SecurOTy failed web login
+id: be2279c6-055d-4b4c-b04e-d5b1209d4b2e
+name: securoty_login_failed
+status: experimental
+description: A single failed login to the SecurOTy web UI. Feeds the brute-force correlation below.
+author: Gruppe 3
+date: 2026-11-17
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: auth.login_failed
+    condition: selection
+level: low
+---
+title: SecurOTy login brute force from one source
+id: 4d0d977b-b880-4408-b2d6-f5844a35fd25
+status: experimental
+description: |
+    Five or more failed logins to the SecurOTy web UI from the same source IP within five minutes.
+    SecurOTy controls firmware rollout to the plant, so password guessing against it is a direct
+    path to manipulating PLC and switch firmware.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.credential_access
+    - attack.t1110.001
+correlation:
+    type: event_count
+    rules:
+        - securoty_login_failed
+    group-by:
+        - source.ip
+    timespan: 5m
+    condition:
+        gte: 5
+falsepositives:
+    - An operator who forgot the password after a credential rotation
+level: high

@@ -1,0 +1,10 @@
+rule: 37353a88-2f5e-403c-90c9-b50f802c1c12
+cases:
+  - name: new MAC addresses reported
+    expect: 1
+    lines: |
+      2026-11-17 13:05:00,000 {"event": "assets.neighbors_new", "source": "fw-cell-01", "macs": "['00:1b:1b:aa:bb:01', 'de:ad:be:ef:00:01']"}
+  - name: regular asset report without new neighbors
+    expect: 0
+    lines: |
+      2026-11-17 13:05:00,000 {"event": "agent.assets_reported", "agent": "fw-cell-01", "count": 7}

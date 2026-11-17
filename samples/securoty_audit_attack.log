@@ -1,0 +1,31 @@
+2026-11-16 07:55:02,114 {"event": "server.start", "version": "0.1.0", "mode": "real", "agent_listener": true}
+2026-11-16 07:58:40,501 {"event": "auth.login_failed", "ip": "10.20.0.15"}
+2026-11-16 07:58:51,033 {"event": "auth.login", "user_id": 1, "ip": "10.20.0.15"}
+2026-11-16 07:59:30,870 {"event": "keepass.unlocked", "user_id": 1, "db": "a1b2c3d4"}
+2026-11-16 08:10:12,002 {"event": "agent.tasks_created", "agent": "fw-cell-01", "user_id": 1, "count": 6, "skipped": 0}
+2026-11-16 08:10:15,410 {"event": "agent.task_claimed", "agent": "fw-cell-01", "task": "t-101", "vendor": "siemens"}
+2026-11-16 08:10:19,778 {"event": "agent.result", "agent": "fw-cell-01", "task": "t-101", "overall": "ok", "mismatches": ""}
+2026-11-16 08:10:21,005 {"event": "agent.task_claimed", "agent": "fw-cell-01", "task": "t-102", "vendor": "weidmueller"}
+2026-11-16 08:10:24,331 {"event": "agent.result", "agent": "fw-cell-01", "task": "t-102", "overall": "mismatch", "mismatches": "serial_number"}
+2026-11-16 08:15:00,000 {"event": "agent.assets_reported", "agent": "fw-cell-01", "count": 9}
+2026-11-16 08:15:00,120 {"event": "assets.neighbors_new", "source": "fw-cell-01", "macs": "['de:ad:be:ef:13:37']"}
+2026-11-16 09:02:44,640 {"event": "firmware.released", "user_id": 1, "package": "s7-1200-v4.6.1", "version": "4.6.1", "stop_run_tested": false}
+2026-11-16 15:20:10,001 {"event": "update.started", "user_id": 1, "job": "j-17", "plan": "p-17"}
+2026-11-16 15:31:52,498 {"event": "update.finished", "job": "j-17", "state": "aborted", "dry_run": false, "summary": "{'pending': 0, 'running': 0, 'succeeded': 1, 'dry_run_ok': 0, 'failed': 1, 'skipped': 0, 'aborted': 2}"}
+2026-11-16 23:47:01,111 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+2026-11-16 23:47:03,380 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+2026-11-16 23:47:05,902 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+2026-11-16 23:47:08,215 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+2026-11-16 23:47:10,733 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+2026-11-16 23:47:13,004 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+2026-11-16 23:49:30,550 {"event": "auth.login", "user_id": 3, "ip": "10.20.0.66"}
+2026-11-16 23:50:02,000 {"event": "keepass.unlock_failed", "user_id": 3, "db": "a1b2c3d4"}
+2026-11-16 23:50:40,000 {"event": "keepass.unlock_failed", "user_id": 3, "db": "a1b2c3d4"}
+2026-11-16 23:51:15,000 {"event": "keepass.unlock_failed", "user_id": 3, "db": "a1b2c3d4"}
+2026-11-16 23:55:00,000 {"event": "assets.cleared", "by": 3, "count": 10}
+2026-11-17 00:12:31,000 {"event": "agent.auth_failed", "reason": "no_peer_certificate", "ip": "10.20.0.66"}
+2026-11-17 00:12:45,000 {"event": "agent.auth_failed", "reason": "unknown_revoked_or_expired", "fingerprint": "77aa01be9c3d2f10", "ip": "10.20.0.66"}
+2026-11-17 00:14:02,000 {"event": "agent.result_rejected", "agent": "fw-cell-01", "task": "t-999"}
+2026-11-17 00:20:00,000 {"event": "pki.initialized", "server_ips": "192.168.10.5"}
+2026-11-17 00:25:11,000 {"event": "agent.deploy_start", "host": "192.168.10.1", "version": "0.1.0", "insecure": true}
+2026-11-17 00:26:40,000 {"event": "agent.deployed", "agent": "fw-cell-01", "version": "0.1.0", "server_reachable": true}

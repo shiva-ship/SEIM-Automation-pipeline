@@ -1,0 +1,11 @@
+rule: 2ed7f766-a896-4c15-8afd-389a32a4f08b
+cases:
+  - name: revoked agent certificate
+    expect: 1
+    lines: |
+      2026-11-17 03:14:00,000 {"event": "agent.auth_failed", "reason": "unknown_revoked_or_expired", "fingerprint": "9f86d081884c7d65", "ip": "192.168.10.1"}
+  - name: other agent auth failure reasons are a different rule
+    expect: 0
+    lines: |
+      2026-11-17 03:14:00,000 {"event": "agent.auth_failed", "reason": "no_peer_certificate", "ip": "192.168.10.1"}
+      2026-11-17 03:15:00,000 {"event": "agent.enrolled", "agent": "fw-cell-01", "fingerprint": "9f86d081884c7d65", "expires_at": "2027-11-17T03:15:00Z"}

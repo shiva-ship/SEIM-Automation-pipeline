@@ -1,0 +1,15 @@
+rule: ff8c334e-1df7-490a-93ae-f219ad301460
+cases:
+  - name: real run with a failed device
+    expect: 1
+    lines: |
+      2026-11-17 06:40:00,000 {"event": "update.finished", "job": "j-7", "state": "failed", "dry_run": false, "summary": "{'pending': 0, 'running': 0, 'succeeded': 2, 'dry_run_ok': 0, 'failed': 1, 'skipped': 0, 'aborted': 0}"}
+  - name: real run aborted
+    expect: 1
+    lines: |
+      2026-11-17 06:40:00,000 {"event": "update.finished", "job": "j-8", "state": "aborted", "dry_run": false, "summary": "{'pending': 0, 'running': 0, 'succeeded': 1, 'dry_run_ok': 0, 'failed': 0, 'skipped': 0, 'aborted': 3}"}
+  - name: successful run and failed dry run
+    expect: 0
+    lines: |
+      2026-11-17 06:40:00,000 {"event": "update.finished", "job": "j-9", "state": "succeeded", "dry_run": false, "summary": "{'pending': 0, 'running': 0, 'succeeded': 4, 'dry_run_ok': 0, 'failed': 0, 'skipped': 1, 'aborted': 0}"}
+      2026-11-17 06:41:00,000 {"event": "update.finished", "job": "j-10", "state": "failed", "dry_run": true, "summary": "{'pending': 0, 'running': 0, 'succeeded': 0, 'dry_run_ok': 3, 'failed': 1, 'skipped': 0, 'aborted': 0}"}

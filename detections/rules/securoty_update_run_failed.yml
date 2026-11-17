@@ -1,0 +1,27 @@
+title: SecurOTy firmware update run failed or aborted
+id: ff8c334e-1df7-490a-93ae-f219ad301460
+status: experimental
+description: |
+    A real (non dry-run) firmware update run ended with failed or aborted devices. SecurOTy aborts
+    the whole run when a device ends up in an unknown state, so devices may be offline or running
+    unverified firmware.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.inhibit_response_function
+    - attack.t0857
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: update.finished
+        securoty.dry_run: false
+    failed:
+        securoty.summary.failed|gt: 0
+    aborted:
+        securoty.summary.aborted|gt: 0
+    condition: selection and (failed or aborted)
+falsepositives:
+    - Network interruption during a planned update
+level: high

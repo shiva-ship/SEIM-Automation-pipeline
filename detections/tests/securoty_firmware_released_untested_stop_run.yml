@@ -1,0 +1,10 @@
+rule: 37ebf677-3beb-4863-8d53-a48adf1c946a
+cases:
+  - name: released without STOP/RUN test
+    expect: 1
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "firmware.released", "user_id": 1, "package": "s7-1200-v4.6.1", "version": "4.6.1", "stop_run_tested": false}
+  - name: released with STOP/RUN test
+    expect: 0
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "firmware.released", "user_id": 1, "package": "s7-1200-v4.6.1", "version": "4.6.1", "stop_run_tested": true}

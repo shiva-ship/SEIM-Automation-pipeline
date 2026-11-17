@@ -1,0 +1,40 @@
+title: SecurOTy KeePass unlock failed
+id: cd289408-4cf0-4993-8da3-36e0b32b3485
+name: securoty_keepass_unlock_failed
+status: experimental
+description: The KeePass master password was entered incorrectly. Feeds the correlation below.
+author: Gruppe 3
+date: 2026-11-17
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: keepass.unlock_failed
+    condition: selection
+level: low
+---
+title: SecurOTy KeePass master password guessing
+id: c78d6abb-1d4c-42b8-8b52-03eedc5debf0
+status: experimental
+description: |
+    Three or more failed KeePass unlocks by the same logged-in user within ten minutes. The KeePass
+    database holds the credentials of every OT device, so this is a high-value target even for an
+    already authenticated (possibly hijacked) session.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.credential_access
+    - attack.t1555.005
+correlation:
+    type: event_count
+    rules:
+        - securoty_keepass_unlock_failed
+    group-by:
+        - user.id
+    timespan: 10m
+    condition:
+        gte: 3
+falsepositives:
+    - Wrong KeePass file uploaded, or a keyboard layout mix-up
+level: high

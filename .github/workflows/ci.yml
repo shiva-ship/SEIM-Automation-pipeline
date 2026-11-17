@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: pip install -e ".[dev,sigma]"
+      - name: Lint
+        run: ruff check .
+      - name: Unit tests
+        run: pytest -q
+      - name: Detection tests (every rule needs true-positive and true-negative cases)
+        run: siempipe test-rules
+      - name: Replay attack sample
+        run: siempipe replay samples/securoty_audit_attack.log --timezone Europe/Berlin > /dev/null
+
+  convert:
+    # Proves every rule is valid Sigma and converts to native SIEM queries.
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e ".[sigma]"
+      - name: Convert rules
+        run: |
+          mkdir -p build/queries
+          siempipe convert --target splunk > build/queries/splunk.spl
+          siempipe convert --target esql   > build/queries/elastic.esql
+          siempipe convert --target eql    > build/queries/elastic.eql
+      - uses: actions/upload-artifact@v4
+        with:
+          name: siem-queries
+          path: build/queries/

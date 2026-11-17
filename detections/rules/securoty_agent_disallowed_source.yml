@@ -1,0 +1,25 @@
+title: SecurOTy agent API contacted from a disallowed source or without certificate
+id: 12d78fd1-1c6b-40cf-bc38-0f41449d4f08
+status: experimental
+description: |
+    The agent API (mTLS) was contacted from an IP outside the allowlist, or without a client
+    certificate. Indicates scanning of, or a connection attempt to, the agent interface.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.discovery
+    - attack.t0846
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: agent.auth_failed
+        event.reason:
+            - source_not_allowed
+            - no_peer_certificate
+    condition: selection
+falsepositives:
+    - Vulnerability scanners run by the IT security team
+    - A newly deployed agent whose IP is not yet on the allowlist
+level: medium

@@ -1,0 +1,48 @@
+# Copy to config/pipeline.yml (git-ignored) and adapt. Relative paths are relative to this file.
+state_dir: ../state            # checkpoints and delivery spools
+poll_interval: 2               # seconds between file polls
+
+sources:
+  - name: securoty
+    type: securoty_audit
+    # SecurOTy writes <data_dir>/audit.log (see backend/config.py: audit_log_path)
+    path: ../../firmware-updater-gruppe3/data/audit.log
+    timezone: Europe/Berlin    # SecurOTy logs local time without offset
+    start_at: beginning        # or "end" to skip history on first start
+    host: securoty-01          # optional observer.hostname
+
+detections:
+  rules:
+    - ../detections/rules
+
+enrichment:
+  assets: assets.example.yml
+  maintenance_windows:         # update.started outside these raises an alert
+    - days: [sat]
+      start: "06:00"
+      end: "14:00"
+      timezone: Europe/Berlin
+    - days: [tue]              # crosses midnight: Tue 22:00 - Wed 02:00
+      start: "22:00"
+      end: "02:00"
+      timezone: Europe/Berlin
+
+outputs:
+  # Every normalized event (for search / retention in the SIEM)
+  events:
+    - type: syslog             # RFC 5424, octet-counted, TLS 1.2+
+      host: siem.example.local
+      port: 6514
+      protocol: tls
+      ca_file: ../certs/siem-ca.pem
+      app_name: securoty
+  # Alerts from siempipe detections
+  alerts:
+    - type: http
+      url: https://siem.example.local:8088/services/collector/event
+      format: splunk_hec       # or ndjson for Elastic/Logstash/Vector/webhooks
+      token_env: SIEMPIPE_HEC_TOKEN   # secret comes from the environment, never from this file
+      index: ot_security
+      sourcetype: siempipe:alert
+    - type: file
+      path: ../state/alerts.jsonl

@@ -1,0 +1,21 @@
+title: SecurOTy agent submitted a result for a task it does not own
+id: f84ff004-7c25-4537-9010-642ba4db8f93
+status: experimental
+description: |
+    An authenticated agent posted a verification result for an unknown, foreign or unclaimed task.
+    Can indicate a compromised agent probing for task IDs or trying to forge verification results.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.defense_evasion
+    - attack.t0856
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: agent.result_rejected
+    condition: selection
+falsepositives:
+    - A result submitted after the task expired (slow agent, clock skew)
+level: medium

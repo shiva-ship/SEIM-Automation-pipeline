@@ -1,0 +1,21 @@
+title: SecurOTy discovered-asset inventory cleared
+id: b2b05c74-7c50-4afd-9a37-a25e1445d0d2
+status: experimental
+description: |
+    A user deleted the assets the agents discovered. This also resets the "new neighbor" baseline,
+    which an attacker could use to hide a rogue device.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.defense_evasion
+    - attack.t0872
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: assets.cleared
+    condition: selection
+falsepositives:
+    - Planned re-baselining after a network change
+level: medium

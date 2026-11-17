@@ -1,0 +1,18 @@
+title: SecurOTy agent revoked or decommissioned
+id: e0efe7d6-98e8-40fa-962e-909e3c278705
+status: experimental
+description: An agent certificate was revoked or an agent decommissioned. Track as a change; confirm it was planned.
+author: Gruppe 3
+date: 2026-11-17
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action:
+            - agent.revoked
+            - agent.decommissioned
+    condition: selection
+falsepositives:
+    - Planned agent replacement
+level: low

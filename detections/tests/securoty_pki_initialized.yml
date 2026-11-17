@@ -1,0 +1,10 @@
+rule: 0ae0ff2a-c59b-40b5-ad20-16ca3514e09c
+cases:
+  - name: CA initialized
+    expect: 1
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "pki.initialized", "server_ips": "192.168.10.5"}
+  - name: agent enrolled
+    expect: 0
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "agent.enrolled", "agent": "fw-cell-01", "fingerprint": "9f86d081884c7d65", "expires_at": "2027-11-17T10:00:00Z"}

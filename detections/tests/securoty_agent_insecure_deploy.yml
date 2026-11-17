@@ -1,0 +1,10 @@
+rule: e2911a61-472f-45ec-8ef8-05e159ffc912
+cases:
+  - name: deploy with insecure Docker connection
+    expect: 1
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "agent.deploy_start", "host": "192.168.10.1", "version": "0.1.0", "insecure": true}
+  - name: deploy with TLS verification
+    expect: 0
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "agent.deploy_start", "host": "192.168.10.1", "version": "0.1.0", "insecure": false}

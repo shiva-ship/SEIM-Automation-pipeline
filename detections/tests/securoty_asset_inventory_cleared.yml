@@ -1,0 +1,10 @@
+rule: b2b05c74-7c50-4afd-9a37-a25e1445d0d2
+cases:
+  - name: discovered assets deleted
+    expect: 1
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "assets.cleared", "by": 2, "count": 17}
+  - name: assets reported
+    expect: 0
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "agent.assets_reported", "agent": "fw-cell-01", "count": 17}

@@ -1,0 +1,11 @@
+rule: 12d78fd1-1c6b-40cf-bc38-0f41449d4f08
+cases:
+  - name: source not on allowlist and missing certificate
+    expect: 2
+    lines: |
+      2026-11-17 11:00:00,000 {"event": "agent.auth_failed", "reason": "source_not_allowed", "ip": "10.99.0.5"}
+      2026-11-17 11:00:01,000 {"event": "agent.auth_failed", "reason": "no_peer_certificate", "ip": "192.168.10.1"}
+  - name: certificate problems are a different rule
+    expect: 0
+    lines: |
+      2026-11-17 11:00:00,000 {"event": "agent.auth_failed", "reason": "unknown_revoked_or_expired", "fingerprint": "9f86d081884c7d65", "ip": "192.168.10.1"}

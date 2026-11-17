@@ -1,0 +1,22 @@
+title: SecurOTy agent saw new devices on the OT network
+id: 37353a88-2f5e-403c-90c9-b50f802c1c12
+status: experimental
+description: |
+    The agent reported MAC addresses on the production network that were never seen before. New,
+    unplanned devices in an OT cell are a classic indicator of a rogue device or a misconfiguration.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.initial_access
+    - attack.t0848
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: assets.neighbors_new
+    condition: selection
+falsepositives:
+    - Planned commissioning of new devices
+    - Service laptops of maintenance technicians
+level: medium

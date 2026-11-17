@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# Runtime state and local configs (may contain hostnames / paths of the plant)
+state/
+config/pipeline.yml
+config/assets.yml
+*.spool.jsonl

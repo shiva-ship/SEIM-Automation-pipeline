@@ -1,0 +1,21 @@
+title: SecurOTy agent PKI (re)initialized
+id: 0ae0ff2a-c59b-40b5-ad20-16ca3514e09c
+status: experimental
+description: |
+    The agent certificate authority was initialized. Expected once at installation; a later
+    re-initialization replaces the trust anchor of all agents and must be a planned change.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.persistence
+    - attack.t1553.004
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: pki.initialized
+    condition: selection
+falsepositives:
+    - Initial installation
+level: medium

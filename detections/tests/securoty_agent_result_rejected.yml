@@ -1,0 +1,10 @@
+rule: f84ff004-7c25-4537-9010-642ba4db8f93
+cases:
+  - name: result for a foreign task
+    expect: 1
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "agent.result_rejected", "agent": "fw-cell-02", "task": "t-1337"}
+  - name: normal result
+    expect: 0
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "agent.result", "agent": "fw-cell-02", "task": "t-12", "overall": "ok", "mismatches": ""}

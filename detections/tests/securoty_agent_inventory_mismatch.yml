@@ -1,0 +1,11 @@
+rule: 77d4b072-dd9e-48a4-b4cb-df7c2e1fc2e5
+cases:
+  - name: serial number differs from KeePass
+    expect: 1
+    lines: |
+      2026-11-17 09:30:00,000 {"event": "agent.result", "agent": "fw-cell-01", "task": "t-42", "overall": "mismatch", "mismatches": "serial_number"}
+  - name: device matches or is offline
+    expect: 0
+    lines: |
+      2026-11-17 09:30:00,000 {"event": "agent.result", "agent": "fw-cell-01", "task": "t-41", "overall": "ok", "mismatches": ""}
+      2026-11-17 09:30:05,000 {"event": "agent.result", "agent": "fw-cell-01", "task": "t-43", "overall": "offline", "mismatches": ""}

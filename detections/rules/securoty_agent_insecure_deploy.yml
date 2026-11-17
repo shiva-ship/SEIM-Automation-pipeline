@@ -1,0 +1,22 @@
+title: SecurOTy agent deployed over an insecure Docker connection
+id: e2911a61-472f-45ec-8ef8-05e159ffc912
+status: experimental
+description: |
+    An agent deployment to the firewall was started with TLS verification disabled for the Docker
+    API. An attacker in the path could replace the agent image.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.defense_evasion
+    - attack.t1562
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: agent.deploy_start
+        securoty.insecure: true
+    condition: selection
+falsepositives:
+    - Lab or demo environments
+level: high

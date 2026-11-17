@@ -1,0 +1,45 @@
+rule: 4d0d977b-b880-4408-b2d6-f5844a35fd25
+cases:
+  - name: five failures from one IP within five minutes
+    expect: 1
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:20,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:01:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:02:10,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:03:59,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+  - name: ten failures produce two alerts, not ten
+    expect: 2
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:01,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:02,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:03,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:04,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:05,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:06,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:07,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:08,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:00:09,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+  - name: operator mistypes twice then logs in
+    expect: 0
+    lines: |
+      2026-11-17 07:58:00,000 {"event": "auth.login_failed", "ip": "10.20.0.15"}
+      2026-11-17 07:58:09,000 {"event": "auth.login_failed", "ip": "10.20.0.15"}
+      2026-11-17 07:58:20,000 {"event": "auth.login", "user_id": 1, "ip": "10.20.0.15"}
+  - name: five failures spread over different IPs
+    expect: 0
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "auth.login_failed", "ip": "10.20.0.11"}
+      2026-11-17 10:00:10,000 {"event": "auth.login_failed", "ip": "10.20.0.12"}
+      2026-11-17 10:00:20,000 {"event": "auth.login_failed", "ip": "10.20.0.13"}
+      2026-11-17 10:00:30,000 {"event": "auth.login_failed", "ip": "10.20.0.14"}
+      2026-11-17 10:00:40,000 {"event": "auth.login_failed", "ip": "10.20.0.15"}
+  - name: five failures from one IP over more than five minutes
+    expect: 0
+    lines: |
+      2026-11-17 10:00:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:02:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:04:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:06:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}
+      2026-11-17 10:08:00,000 {"event": "auth.login_failed", "ip": "10.20.0.66"}

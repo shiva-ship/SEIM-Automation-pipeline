@@ -1,0 +1,19 @@
+rule: c78d6abb-1d4c-42b8-8b52-03eedc5debf0
+cases:
+  - name: three wrong master passwords by one user in ten minutes
+    expect: 1
+    lines: |
+      2026-11-17 22:10:00,000 {"event": "keepass.unlock_failed", "user_id": 3, "db": "a1b2c3d4"}
+      2026-11-17 22:12:00,000 {"event": "keepass.unlock_failed", "user_id": 3, "db": "a1b2c3d4"}
+      2026-11-17 22:15:00,000 {"event": "keepass.unlock_failed", "user_id": 3, "db": "a1b2c3d4"}
+  - name: one typo then unlock
+    expect: 0
+    lines: |
+      2026-11-17 08:00:00,000 {"event": "keepass.unlock_failed", "user_id": 1, "db": "a1b2c3d4"}
+      2026-11-17 08:00:15,000 {"event": "keepass.unlocked", "user_id": 1, "db": "a1b2c3d4"}
+  - name: failures by different users
+    expect: 0
+    lines: |
+      2026-11-17 08:00:00,000 {"event": "keepass.unlock_failed", "user_id": 1, "db": "a1b2c3d4"}
+      2026-11-17 08:01:00,000 {"event": "keepass.unlock_failed", "user_id": 2, "db": "a1b2c3d4"}
+      2026-11-17 08:02:00,000 {"event": "keepass.unlock_failed", "user_id": 4, "db": "a1b2c3d4"}

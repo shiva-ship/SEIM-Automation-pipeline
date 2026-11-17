@@ -1,0 +1,23 @@
+title: SecurOTy agent connection with unknown, revoked or expired certificate
+id: 2ed7f766-a896-4c15-8afd-389a32a4f08b
+status: experimental
+description: |
+    A client presented a certificate to the agent API that is not (or no longer) trusted. This can
+    be a decommissioned agent that is still running, or a rogue device impersonating an agent.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.initial_access
+    - attack.t0848
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: agent.auth_failed
+        event.reason: unknown_revoked_or_expired
+    condition: selection
+falsepositives:
+    - A decommissioned agent that was revoked but not shut down
+    - An agent whose certificate expired before renewal
+level: high

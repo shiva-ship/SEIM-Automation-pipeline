@@ -1,0 +1,23 @@
+title: SecurOTy firmware update started outside a maintenance window
+id: 30042c57-9857-4a56-87a7-9c7abbaa1532
+status: experimental
+description: |
+    A firmware update run was started outside the configured maintenance windows (see
+    enrichment.maintenance_windows). Out-of-window changes can stop production and are a typical
+    sign of misuse of a legitimate tool. Only fires when maintenance windows are configured.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.persistence
+    - attack.t0857
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: update.started
+        securoty.in_maintenance_window: false
+    condition: selection
+falsepositives:
+    - Emergency patching of an actively exploited vulnerability
+level: medium

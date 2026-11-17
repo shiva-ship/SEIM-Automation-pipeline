@@ -1,0 +1,23 @@
+title: SecurOTy agent found device not matching the KeePass inventory
+id: 77d4b072-dd9e-48a4-b4cb-df7c2e1fc2e5
+status: experimental
+description: |
+    The on-site agent read a device and its identity (serial number, IP, firmware, ...) differs from
+    the inventory. A swapped or spoofed device would receive firmware meant for another one.
+author: Gruppe 3
+date: 2026-11-17
+tags:
+    - attack.defense_evasion
+    - attack.t0849
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: agent.result
+        securoty.overall: mismatch
+    condition: selection
+falsepositives:
+    - A device replaced during maintenance before the KeePass entry was updated
+    - Firmware updated outside SecurOTy (inventory version is stale)
+level: high

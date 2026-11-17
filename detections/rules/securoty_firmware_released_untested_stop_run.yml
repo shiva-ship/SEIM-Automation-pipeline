@@ -1,0 +1,19 @@
+title: SecurOTy firmware package released without STOP/RUN test
+id: 37ebf677-3beb-4863-8d53-a48adf1c946a
+status: experimental
+description: |
+    A firmware package was released for rollout although the STOP/RUN behaviour of the PLC was not
+    tested. Process finding rather than an attack, but rolling it out can stop the line.
+author: Gruppe 3
+date: 2026-11-17
+logsource:
+    product: securoty
+    service: audit
+detection:
+    selection:
+        event.action: firmware.released
+        securoty.stop_run_tested: false
+    condition: selection
+falsepositives:
+    - Packages for devices without a STOP/RUN state (switches, IO-Link masters)
+level: low

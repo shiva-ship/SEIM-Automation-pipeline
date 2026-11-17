@@ -1,0 +1,24 @@
+rule: 30042c57-9857-4a56-87a7-9c7abbaa1532
+enrichment:
+  maintenance_windows:
+    - days: [sat]
+      start: "06:00"
+      end: "14:00"
+      timezone: Europe/Berlin
+    - days: [tue]
+      start: "22:00"
+      end: "02:00"
+      timezone: Europe/Berlin
+cases:
+  - name: update on a Monday afternoon
+    expect: 1
+    timezone: Europe/Berlin
+    lines: |
+      2026-11-16 15:00:00,000 {"event": "update.started", "user_id": 2, "job": "j-1", "plan": "p-1"}
+  - name: update on Saturday morning and Tuesday night (window crosses midnight)
+    expect: 0
+    timezone: Europe/Berlin
+    lines: |
+      2026-11-21 07:30:00,000 {"event": "update.started", "user_id": 2, "job": "j-2", "plan": "p-2"}
+      2026-11-17 23:30:00,000 {"event": "update.started", "user_id": 2, "job": "j-3", "plan": "p-3"}
+      2026-11-18 01:30:00,000 {"event": "update.started", "user_id": 2, "job": "j-4", "plan": "p-4"}
